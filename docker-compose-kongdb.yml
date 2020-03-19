@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+
+  #################################################################
+  # Postgres: The database used by Kong
+  #################################################################
+  kong-database:
+    image: postgres:9.6
+    container_name: kong-database
+    restart: on-failure
+    environment:
+      POSTGRES_DB: kong_db
+      POSTGRES_USER: kong_user
+      POSTGRES_PASSWORD: kong_password
+    ports:
+      - 5432:5432
+    volumes:
+      - ./kong-data:/var/lib/postgresql/data
+    networks:
+      - ntw-kong
+
+networks:
+  ntw-kong:
+    driver: bridge
