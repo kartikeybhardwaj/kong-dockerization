@@ -1,0 +1,54 @@
+version: "3.7"
+
+services:
+
+  #################################################################
+  # Kong database migrations bootstrap
+  #################################################################
+  kong-migrations-bootstrap:
+    image: kong:latest
+    container_name: kong-migrations-bootstrap
+    command: kong migrations bootstrap
+    restart: on-failure
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_DATABASE: kong_db
+      KONG_PG_USER: kong_user
+      KONG_PG_PASSWORD: kong_password
+    networks:
+      - ntw-kong
+
+  #################################################################
+  # Kong database migrations up
+  #################################################################
+  kong-migrations-up:
+    image: kong:latest
+    container_name: kong-migrations-up
+    command: kong migrations up && kong migrations finish
+    restart: on-failure
+    depends_on:
+      - kong-migrations-bootstrap
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_DATABASE: kong_db
+      KONG_PG_USER: kong_user
+      KONG_PG_PASSWORD: kong_password
+    networks:
+      - ntw-kong
+
+  #################################################################
+  # Konga database prepare
+  #################################################################
+  konga-prepare:
+    image: pantsel/konga:next
+    container_name: konga-prepare
+    command: "-c prepare -a postgres -u postgresql://kong_user:kong_password@kong-database:5432/konga_db"
+    restart: on-failure
+    networks:
+      - ntw-kong
+
+networks:
+  ntw-kong:
+    driver: bridge
