@@ -69,7 +69,7 @@ NOTE: This serves kong and konga.
 - `environment` is a way to define environment variables. Here, we've defined **KONG_DATABASE**, **KONG_PG_HOST**, **KONG_PG_DATABASE**, **KONG_PG_USER**, **POSTGRES_PASSWORD** and **KONG_ADMIN_LISTEN** for kong and **DB_ADAPTER**, **DB_HOST**, **DB_USER**, **DB_PASSWORD**, **DB_DATABASE**, **NODE_ENV** for konga.
 - `volumes` to define a file/folder that you want to use for the container.
 - `./konga-data:/app/kongadata` means you want to set data on container persist on you local folder named **konga-data**. **/app/kongadata** is a folder that is already created inside the konga container.
-- `ports` is to define which ports you want to expose and define, in this case we're using default kong ports **8000, 8001, 8442,3, 8444** and konga port **1337** and exposing it to host machine.
+- `ports` is to define which ports you want to expose and define, in this case we're using default kong ports **8000, 8001, 8443, 8444** and konga port **1337** and exposing it to host machine.
 - `ntw-kong` is used as a bridge to connect all the three services in a network.
 
 #### Execution and access
@@ -92,7 +92,7 @@ You are now good to create services and routes associated with them.
 
 #### References
 
-- [Install Elasticsearch with Docker](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker)
-- [Configuring security in Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-security.html)
-- [Configuring Logstash for Docker](https://www.elastic.co/guide/en/logstash/current/docker-config.html)
-- [Running Kibana on Docker](https://www.elastic.co/guide/en/kibana/current/docker.html)
+- [Install Elasticsearch with Docker](https://konghq.com/)
+- [docker-kong/compose/docker-compose.yml](https://github.com/Kong/docker-kong/blob/master/compose/docker-compose.yml)
+- [More than just another GUI to KONG Admin API](https://github.com/pantsel/konga)
+- [pantsel/docker-compose.yml](https://gist.github.com/pantsel/73d949774bd8e917bfd3d9745d71febf)
